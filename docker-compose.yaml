@@ -6,10 +6,10 @@ services:
     container_name: "API"
     ports:
       - "50050:50050"
-  service1:
+  auth-service:
     build:
-      context: ./cmd/service1
-    container_name: "Service1"
+      context: cmd/AuthService
+    container_name: "AuthService"
     ports:
       - "50051:50051"
     depends_on:
