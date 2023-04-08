@@ -30,8 +30,14 @@ func (r *repository) CreateUser(ctx context.Context, user User) error {
 }
 
 func (r *repository) GetUser(ctx context.Context, id string) (string, error) {
-	//TODO implement me
-	panic("implement me")
+	var email string
+	sql := `SELECT email FROM users
+			WHERE id = $1`
+	err := r.db.QueryRow(sql, id).Scan(&email)
+	if err != nil {
+		return "", RepositoryError
+	}
+	return email, nil
 }
 
 func NewRepository(db *sql.DB, logger log.Logger) Repository {
