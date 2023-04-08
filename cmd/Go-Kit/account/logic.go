@@ -23,18 +23,26 @@ func (s *service) CreateUser(ctx context.Context, email string, password string)
 		Password: password,
 	}
 	if err := s.repository.CreateUser(ctx, user); err != nil {
-		err := level.Error(logger).Log("err", err)
-		if err != nil {
-			return "", err
-		}
+		_ = level.Error(logger).Log("Error:", err)
 		return "", err
 	}
+
+	_ = logger.Log("Created user:", id)
 
 	return "Success", nil
 }
 
 func (s *service) GetUser(ctx context.Context, id string) (string, error) {
-	panic("implement me")
+	logger := log.With(s.logger, "method", "GetUser")
+
+	email, err := s.GetUser(ctx, id)
+	if err != nil {
+		_ = logger.Log("Error:", err)
+		return "", err
+	}
+	_ = logger.Log("User Id:", id)
+
+	return email, nil
 }
 
 func NewService(repository Repository, logger log.Logger) Service {
