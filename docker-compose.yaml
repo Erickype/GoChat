@@ -6,13 +6,22 @@ services:
     container_name: "API"
     ports:
       - "50050:50050"
-  service1:
+  auth-service:
     build:
-      context: ./cmd/service1
-    container_name: "Service1"
+      context: cmd/AuthService
+      dockerfile: Dockerfile
+    container_name: "AuthService"
     ports:
       - "50051:50051"
     depends_on:
       - api
-
+  client-test:
+    build:
+      context: cmd/AuthService
+      dockerfile: DockerfileClient
+    container_name: "ClientTest"
+    ports:
+      - "50052:5052"
+    depends_on:
+      - auth-service
 

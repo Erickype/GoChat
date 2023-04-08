@@ -14,10 +14,10 @@ RUN go mod download
 COPY .. .
 
 # Build the binary
-RUN go build -o app ./main.go
+RUN go build -o client ./Client/client.go
 
 # Expose the gRPC port
 EXPOSE 50051
 
 # Start the service
-CMD ["./app"]
+CMD ["./client"]
