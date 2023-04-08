@@ -3,6 +3,7 @@ package account
 import (
 	"context"
 	"encoding/json"
+	"github.com/gorilla/mux"
 	"net/http"
 )
 
@@ -31,6 +32,15 @@ func decodeUserRequest(_ context.Context, r *http.Request) (interface{}, error) 
 	err := json.NewDecoder(r.Body).Decode(&req)
 	if err != nil {
 		return nil, err
+	}
+	return req, nil
+}
+
+func decodeEmailRequest(_ context.Context, r *http.Request) (interface{}, error) {
+	var req GetUserRequest
+	vars := mux.Vars(r)
+	req = GetUserRequest{
+		Id: vars["id"],
 	}
 	return req, nil
 }
