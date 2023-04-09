@@ -24,4 +24,24 @@ services:
       - "50052:5052"
     depends_on:
       - auth-service
+  go-kit-db:
+    build:
+      context: cmd/Go-Kit
+      dockerfile: DockerfileDB
+    container_name: "GoKitDB"
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgres/data
+  go-kit:
+    build:
+      context: cmd/Go-Kit
+      dockerfile: Dockerfile
+    container_name: "GoKit"
+    ports:
+      - "8080:8080"
+    depends_on:
+      - go-kit-db
 
+volumes:
+  db-data:
