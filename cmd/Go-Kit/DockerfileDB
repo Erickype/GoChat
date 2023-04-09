@@ -1,0 +1,13 @@
+# Use the official PostgreSQL image as the base image
+FROM postgres:latest
+
+# Set the environment variables
+ENV POSTGRES_USER GoKit
+ENV POSTGRES_PASSWORD Gokit
+ENV POSTGRES_DB GoKit
+
+# Copy the SQL scripts to initialize the database
+COPY db/init.sql /docker-entrypoint-initdb.d/
+
+# Expose the PostgreSQL port
+EXPOSE 5432
