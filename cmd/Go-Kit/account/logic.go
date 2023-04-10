@@ -35,7 +35,7 @@ func (s *service) CreateUser(ctx context.Context, email string, password string)
 func (s *service) GetUser(ctx context.Context, id string) (string, error) {
 	logger := log.With(s.logger, "method", "GetUser")
 
-	email, err := s.GetUser(ctx, id)
+	email, err := s.repository.GetUser(ctx, id)
 	if err != nil {
 		_ = logger.Log("Error:", err)
 		return "", err
